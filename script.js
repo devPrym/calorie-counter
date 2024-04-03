@@ -9,14 +9,34 @@ let isError = false;
 function cleanInputString(str) {
     const regex = /[+-\s]/g;
     return str.replace(regex, '');
-}
+  }
   
 function isInvalidInput(str) {
     const regex = /\d+e\d+/i;
     return str.match(regex);
-}
-
+  }
+  
 function addEntry() {
-    const targetId = '#' + entryDropdown.value;
-    const targetInputContainer = document.querySelector(targetId + ' .input-container');
-}
+    const targetInputContainer = document.querySelector(`#${entryDropdown.value} .input-container`);
+    const entryNumber = targetInputContainer.querySelectorAll('input[type="text"]').length + 1;
+    const HTMLString = `
+    <label for="${entryDropdown.value}-${entryNumber}-name">Entry ${entryNumber} Name</label>
+    <input type="text" id="${entryDropdown.value}-${entryNumber}-name" placeholder="Name" />
+    <label for="${entryDropdown.value}-${entryNumber}-calories">Entry ${entryNumber} Calories</label>
+    <input
+      type="number"
+      min="0"
+      id="${entryDropdown.value}-${entryNumber}-calories"
+      placeholder="Calories"
+    />`;
+    targetInputContainer.insertAdjacentHTML('beforeend', HTMLString);
+  }
+  
+function getCaloriesFromInputs(list) {
+    let calories = 0;
+    for (const item of list) {
+      console.log(item)
+    }
+  }
+  
+addEntryButton.addEventListener("click", addEntry);
